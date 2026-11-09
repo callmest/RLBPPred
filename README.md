@@ -1,9 +1,14 @@
-# RLBPPred: pretrained inference
+# RLBPPred
 
 Predict R-loop-binding protein scores with the frozen **strict SaProt-650M-AF2 +
 300-member MLP ensemble**. This repository is an independently installable
 prediction tool; it does not train a new model. Training, paper figures, frozen
-results and downstream analyses are in [callmest/RLBPPred](https://github.com/callmest/RLBPPred).
+results and downstream analyses are in
+[callmest/RLBPPred-paper-code](https://github.com/callmest/RLBPPred-paper-code).
+
+Software **v0.2.1** uses the unchanged pretrained assets from **model release
+v0.2.0**. This patch updates repository names, links and download locations only;
+it does not change the model, scaler, features or prediction method.
 
 ## FASTA to predictions: three commands
 
@@ -11,13 +16,13 @@ Use Python 3.10–3.13 in a fresh environment on macOS or Linux x86-64 (AVX2).
 Install from this versioned GitHub repository; no PyPI publication is implied.
 
 ```bash
-python -m pip install "rlbppred[fasta] @ git+https://github.com/callmest/RLBPPred-inference.git@v0.2.0"
+python -m pip install "rlbppred[fasta] @ git+https://github.com/callmest/RLBPPred.git@v0.2.1"
 rlbppred setup
 rlbppred predict-fasta --fasta proteins.fasta --output-dir predictions
 ```
 
 `setup` explicitly downloads approximately 3.6 GB once: our safe pretrained MLP
-bundle from the [v0.2.0 GitHub Release](https://github.com/callmest/RLBPPred-inference/releases/tag/v0.2.0),
+bundle from the [v0.2.0 model release](https://github.com/callmest/RLBPPred/releases/tag/v0.2.0),
 the official SaProt checkpoint from a fixed Hugging Face revision, and a pinned
 Foldseek executable. Sizes and SHA-256 hashes are checked before use. Large
 weights are not stored in ordinary Git or the code wheel. No Zenodo deposit is
@@ -96,7 +101,7 @@ FPR/FDR, and mouse deployment FPR was not established by that experiment.
 For MLP-only installation omit the `fasta` extra:
 
 ```bash
-python -m pip install "rlbppred @ git+https://github.com/callmest/RLBPPred-inference.git@v0.2.0"
+python -m pip install "rlbppred @ git+https://github.com/callmest/RLBPPred.git@v0.2.1"
 rlbppred setup --components model
 rlbppred predict --embeddings features.npz --output predictions.csv
 ```
@@ -138,8 +143,8 @@ paper snapshot; each run records its actual version and hash.
 ## Development
 
 ```bash
-git clone https://github.com/callmest/RLBPPred-inference.git
-cd RLBPPred-inference
+git clone https://github.com/callmest/RLBPPred.git
+cd RLBPPred
 python -m pip install '.[dev,fasta]'
 python -m pytest
 python -m build

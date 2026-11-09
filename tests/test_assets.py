@@ -15,6 +15,14 @@ import pytest
 from rlbppred import assets
 
 
+@pytest.mark.parametrize("name,filename", [("mlp-weights", "model.safetensors"),
+                                           ("mlp-manifest", "model.json")])
+def test_frozen_model_urls_use_main_software_repository(name, filename):
+    assert assets.ASSETS[name].url == (
+        "https://github.com/callmest/RLBPPred/releases/download/v0.2.0/" + filename
+    )
+
+
 class Response(io.BytesIO):
     def __init__(self, data, url="https://example.org/file", content_length=None):
         super().__init__(data)

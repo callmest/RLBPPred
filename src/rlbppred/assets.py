@@ -25,6 +25,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
+from . import __version__
 from .encoder import CHECKPOINT_BYTES, CHECKPOINT_REVISION, CHECKPOINT_SHA256
 
 
@@ -36,7 +37,7 @@ class Asset:
     sha256: str
 
 
-_RELEASE = "https://github.com/callmest/RLBPPred-inference/releases/download/v0.2.0"
+_RELEASE = "https://github.com/callmest/RLBPPred/releases/download/v0.2.0"
 ASSETS = {
     "saprot": Asset(
         "SaProt_650M_AF2.pt",
@@ -140,7 +141,7 @@ def download_asset(name, cache_dir, *, timeout=60, retries=2, progress=True):
     for attempt in range(retries + 1):
         temporary = None
         try:
-            request = Request(asset.url, headers={"User-Agent": "RLBPPred/0.2.0", "Accept-Encoding": "identity"})
+            request = Request(asset.url, headers={"User-Agent": f"RLBPPred/{__version__}", "Accept-Encoding": "identity"})
             with opener.open(request, timeout=timeout) as response:
                 _https(response.geturl())
                 content_length = response.headers.get("Content-Length")

@@ -20,6 +20,8 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlparse
 from urllib.request import Request, urlopen
 
+from . import __version__
+
 
 AMINO_ACIDS = frozenset('ACDEFGHIKLMNPQRSTVWY')
 STRUCTURE_ALPHABET = frozenset('pynwrqhgdlvtmfsaeikc#')
@@ -121,7 +123,7 @@ def _checked_url(url, api=False):
 def _fetch_bytes(url, *, api=False, max_bytes=100_000_000):
     """Bounded public download; no user sequences or credentials are submitted."""
     _checked_url(url, api=api)
-    request = Request(url, headers={'User-Agent': 'RLBPPred/0.2.0 structure retrieval',
+    request = Request(url, headers={'User-Agent': f'RLBPPred/{__version__} structure retrieval',
                                     'Accept': 'application/json' if api else '*/*'})
     try:
         with urlopen(request, timeout=45) as response:

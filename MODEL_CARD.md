@@ -2,6 +2,12 @@
 
 Maintainer and publisher: callmest. Model ID: `strict-saprot-af2-mlp-v1`.
 
+Software [v0.2.1](https://github.com/callmest/RLBPPred/releases/tag/v0.2.1)
+uses the unchanged pretrained files from
+[model release v0.2.0](https://github.com/callmest/RLBPPred/releases/tag/v0.2.0).
+Training and paper reproduction are in
+[callmest/RLBPPred-paper-code](https://github.com/callmest/RLBPPred-paper-code).
+
 ## Intended use
 
 Research prioritization of possible R-loop-associated/binding proteins from

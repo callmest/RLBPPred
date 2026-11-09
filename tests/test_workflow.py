@@ -247,7 +247,7 @@ def test_cli_version_is_current(capsys):
     with pytest.raises(SystemExit) as exc:
         cli.main(["--version"])
     assert exc.value.code == 0
-    assert capsys.readouterr().out.strip() == "rlbppred 0.2.0"
+    assert capsys.readouterr().out.strip() == "rlbppred 0.2.1"
 
 
 def test_setup_model_dispatch_uses_requested_asset_cache(tmp_path, monkeypatch, capsys):

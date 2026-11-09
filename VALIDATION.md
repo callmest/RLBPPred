@@ -103,3 +103,26 @@ differ from historical AF2 files; the actual accession/version/hash is recorded
 and sequence coverage checked, rather than assuming equivalence. No CUDA run,
 arbitrary-sequence folding service, PyPI publication or archival DOI is claimed.
 No manuscript text or review-comment state was changed by this code split.
+
+## Repository-name patch v0.2.1
+
+The preceding evidence remains the historical v0.2.0 acceptance record. Software
+v0.2.1 changes repository names, package metadata, links and download endpoints
+only. The independently installable software is now
+[callmest/RLBPPred](https://github.com/callmest/RLBPPred), and training/paper
+reproduction is maintained separately in
+[callmest/RLBPPred-paper-code](https://github.com/callmest/RLBPPred-paper-code).
+
+The frozen MLP files remain in the software repository's **model release
+v0.2.0**, with the same sizes and SHA-256 values. Encoder, model weights, scaler,
+feature extraction, score aggregation and screening defaults are unchanged.
+No model was retrained, scientific analysis rerun or historical tag modified
+for this repository-name patch.
+
+- All **297** offline software tests passed, including two explicit regression
+  checks for the renamed model-download endpoints.
+- The v0.2.1 source distribution and code-only wheel built successfully using
+  the existing packaging QA environment.
+
+This patch does not claim a repeated biological or whole-proteome validation.
+Maintainer and publisher: callmest.

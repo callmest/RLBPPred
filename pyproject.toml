@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rlbppred"
-version = "0.2.0"
+version = "0.2.1"
 description = "Pretrained strict SaProt-AF2 R-loop-binding protein scoring"
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
@@ -21,8 +21,8 @@ fasta = ["fair-esm==2.0.0", "biopython>=1.85,<1.87"]
 dev = ["pytest>=8,<10", "build>=1,<2"]
 
 [project.urls]
-Homepage = "https://github.com/callmest/RLBPPred-inference"
-Reproduction = "https://github.com/callmest/RLBPPred"
+Homepage = "https://github.com/callmest/RLBPPred"
+Reproduction = "https://github.com/callmest/RLBPPred-paper-code"
 
 [tool.setuptools.packages.find]
 where = ["src"]

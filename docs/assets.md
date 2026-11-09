@@ -1,5 +1,11 @@
 # Fixed assets and offline setup
 
+The current software is **v0.2.1** in [callmest/RLBPPred](https://github.com/callmest/RLBPPred).
+The frozen MLP assets remain in **model release v0.2.0** in that repository;
+their file contents, sizes and hashes are unchanged. Training and paper
+reproduction are maintained separately in
+[callmest/RLBPPred-paper-code](https://github.com/callmest/RLBPPred-paper-code).
+
 `rlbppred setup` is the only automatic weight-download step. Prediction downloads
 only explicitly permitted AFDB structures when local structures are absent.
 Weights are never trained or replaced automatically. The setup command checks
@@ -35,16 +41,16 @@ prediction head, absent from this official checkpoint, is explicitly disabled.
 ## Strict MLP
 
 Download these two files from the
-[v0.2.0 Release](https://github.com/callmest/RLBPPred-inference/releases/tag/v0.2.0),
+[v0.2.0 model release](https://github.com/callmest/RLBPPred/releases/tag/v0.2.0),
 not from an untrusted third party:
 
 ```bash
 mkdir strict-saprot-af2-mlp-v1
 curl --fail --location \
-  https://github.com/callmest/RLBPPred-inference/releases/download/v0.2.0/model.json \
+  https://github.com/callmest/RLBPPred/releases/download/v0.2.0/model.json \
   --output strict-saprot-af2-mlp-v1/model.json
 curl --fail --location \
-  https://github.com/callmest/RLBPPred-inference/releases/download/v0.2.0/model.safetensors \
+  https://github.com/callmest/RLBPPred/releases/download/v0.2.0/model.safetensors \
   --output strict-saprot-af2-mlp-v1/model.safetensors
 rlbppred model install --source strict-saprot-af2-mlp-v1
 ```
