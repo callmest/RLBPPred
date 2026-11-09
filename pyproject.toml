@@ -9,7 +9,7 @@ description = "Pretrained strict SaProt-AF2 R-loop-binding protein scoring"
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
 license = "MIT"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
 authors = [{name = "callmest"}]
 dependencies = ["numpy>=1.26,<3", "torch>=2.6,<2.11", "safetensors>=0.4.5,<1"]
 
