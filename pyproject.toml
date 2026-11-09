@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rlbppred"
+version = "0.2.0"
+description = "Pretrained strict SaProt-AF2 R-loop-binding protein scoring"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "callmest"}]
+dependencies = ["numpy>=1.26,<3", "torch>=2.6,<2.11", "safetensors>=0.4.5,<1"]
+
+[project.scripts]
+rlbppred = "rlbppred.cli:main"
+
+[project.optional-dependencies]
+fasta = ["fair-esm==2.0.0", "biopython>=1.85,<1.87"]
+dev = ["pytest>=8,<10", "build>=1,<2"]
+
+[project.urls]
+Homepage = "https://github.com/callmest/RLBPPred-inference"
+Reproduction = "https://github.com/callmest/RLBPPred"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

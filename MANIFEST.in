@@ -1,0 +1,5 @@
+include VALIDATION.md
+include MODEL_CARD.md
+include THIRD_PARTY_NOTICES.md
+recursive-include docs *.md
+recursive-include examples *.fasta
