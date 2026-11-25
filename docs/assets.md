@@ -1,6 +1,6 @@
 # Fixed assets and offline setup
 
-Software v0.3.0 and v0.2.1 use the same pretrained
+Software v0.3.1, v0.3.0 and v0.2.1 use the same pretrained
 assets. The frozen MLP files are in **model release v0.2.0** in
 [callmest/RLBPPred](https://github.com/callmest/RLBPPred);
 their file contents, sizes and hashes are unchanged. Training and paper
@@ -79,6 +79,23 @@ release. An override records the actual version/hash and is not silently claimed
 equivalent to the pinned configuration. Linux AVX2 CPU support is a prerequisite.
 
 ## Cache and offline use
+
+For an offline v0.3.1 installation, prepare a wheel directory on an online machine
+with the **same OS, architecture and Python version** as the offline machine.
+From the tagged checkout, run:
+
+```bash
+python -m pip wheel --find-links https://download.pytorch.org/whl/cpu/torch/ --wheel-dir wheelhouse '.[fasta]'
+```
+
+Copy `wheelhouse` to the offline machine, then install without using an index:
+
+```bash
+python -m pip install --no-index --find-links wheelhouse 'rlbppred[fasta]==0.3.1'
+```
+
+The wheels contain the software, not the model files. Copy the verified model
+assets separately as described below.
 
 Defaults are `~/.cache/rlbppred/assets` for encoder/Foldseek and
 `~/.cache/rlbppred/strict-saprot-af2-mlp-v1` for the MLP. Use `--assets-dir`,

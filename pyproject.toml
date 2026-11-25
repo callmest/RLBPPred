@@ -4,14 +4,20 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rlbppred"
-version = "0.3.0"
+version = "0.3.1"
 description = "Pretrained strict SaProt-AF2 R-loop-binding protein scoring"
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
 license = "MIT"
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
 authors = [{name = "callmest"}]
-dependencies = ["numpy>=1.26,<3", "torch>=2.6,<2.11", "safetensors>=0.4.5,<1"]
+dependencies = [
+    "numpy>=1.26,<3",
+    "torch==2.10.0+cpu; sys_platform != 'darwin'",
+    # Official Apple Silicon wheels have no +cpu suffix. Exclude local GPU variants.
+    "torch===2.10.0; sys_platform == 'darwin'",
+    "safetensors>=0.4.5,<1",
+]
 
 [project.scripts]
 rlbppred = "rlbppred.cli:main"

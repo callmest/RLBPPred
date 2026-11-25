@@ -3,29 +3,53 @@
 `RLBPPred` is a command-line tool for ranking proteins as candidate R-loop-binding proteins. It scores each protein with a pretrained SaProt-650M-AF2 encoder and a 300-member MLP ensemble. Start with a UniProt FASTA file, a local protein structure, or precomputed SaProt embeddings.
 
 ## Installation
-`RLBPPred` only support local installation, but will suport PyPI or Bioconda online installation in the future.
 
-Use Python 3.10–3.13. Install [v0.3.0](https://github.com/callmest/RLBPPred/releases/tag/v0.3.0) from source to run the bundled examples:
+Install RLBPPred from source as shown below. PyPI and Bioconda packages are planned but are not available for v0.3.1.
 
-```
+Use Python 3.10–3.13. Install [v0.3.1](https://github.com/callmest/RLBPPred/releases/tag/v0.3.1) from source to run the bundled examples:
+
+```bash
 conda create -n rlbppred python=3.10
-git clone --branch v0.3.0 --depth 1 https://github.com/callmest/RLBPPred.git
+conda activate rlbppred
+git clone --branch v0.3.1 --depth 1 https://github.com/callmest/RLBPPred.git
 cd RLBPPred
-pip install '.[fasta]'
+python -m pip install --find-links https://download.pytorch.org/whl/cpu/torch/ '.[fasta]'
 rlbppred setup
 ```
-The `fasta` extra supports both sequence and structure inputs. Setup downloads and verifies about 3.6 GB once. The bundled Foldseek executable supports modern macOS and Linux x86_64. Prediction runs on **CPU** by default.
+
+The package requires PyTorch 2.10.0: the `+cpu` build on Linux/Windows or the native, non-CUDA wheel on Apple Silicon. The link in the install command lets pip find those builds; CUDA and ROCm wheels do not satisfy the dependency. Prediction runs on CPU.
+
+The `fasta` extra supports both sequence and structure inputs. Setup downloads and verifies about 3.6 GB of pretrained assets once. Foldseek is bundled for macOS and for Linux x86-64 CPUs with AVX2 support.
 
 ## Usage
+
 ### Examples
-1. If your target protein got structure in [AlphaFoldDB](https://alphafold.ebi.ac.uk/)
-```
+
+**UniProt FASTA.** Each FASTA header must include a UniProt accession. RLBPPred retrieves a full-length structure with a matching sequence from [AlphaFold DB](https://alphafold.ebi.ac.uk/); it does not fold arbitrary sequences.
+
+```bash
 rlbppred predict --fasta examples/P49917.fasta --output-dir results_lig4
 ```
-2. User-defined structure
+
+**Local structure (PDB or mmCIF).** Score chain A of the bundled ubiquitin PDB file:
+
 ```bash
-rlbppred predict --pdb examples/1UBQ.pdb --chain A --output-dir results_1ubq
-rlbppred predict --pdb examples/1UBQ.mmcif --chain A --output-dir results_1ubq
+rlbppred predict --pdb examples/1UBQ.pdb --chain A --output-dir results_1ubq_pdb
+```
+
+To run the same example in mmCIF format, download the coordinates from the RCSB PDB first. If you already have a local mmCIF file, skip the download and use its path instead.
+
+```bash
+curl --fail --location https://files.rcsb.org/download/1UBQ.cif --output 1UBQ.cif
+rlbppred predict --pdb 1UBQ.cif --chain A --output-dir results_1ubq_cif
+```
+
+Use a new output directory for each structure or FASTA run. For local structures, only the observed residues in the selected chain are scored. The model was trained on AlphaFold DB structures; experimental B-factors are not treated as pLDDT. Neither prediction accuracy nor the 0.98 screening cutoff has been validated on experimental structures.
+
+**Precomputed embeddings.** To rescore the embeddings saved by the FASTA example without running Foldseek or SaProt again:
+
+```bash
+rlbppred predict --embeddings results_lig4/features.npz --output lig4_rescored.csv
 ```
 
 ### Full usage
@@ -69,13 +93,13 @@ Open `results_lig4/predictions.csv`. With AlphaFold DB structure version 6, the 
 
 The score is rounded here. `probability` is the mean ensemble score, not a calibrated probability of binding. The last two columns flag scores **≥0.5** and **≥0.98** (the default screening cutoff), respectively. A high score prioritizes a protein for follow-up; it does not establish binding.
 
-## Documentations
+## Documentation
 
 - [Model card](MODEL_CARD.md) and [validation results](VALIDATION.md) — training data, screening cutoff, and checks against reference predictions.
 - [Installation and offline setup](docs/assets.md) — model downloads, versions, checksums, and cache locations.
 - [Example inputs](examples/README.md) — file sources and requirements for local structures.
 - [RLBPPred-paper-code](https://github.com/callmest/RLBPPred-paper-code) — training and analysis code for reproducing the paper.
-
+- [MIT license](LICENSE) and [third-party notices](THIRD_PARTY_NOTICES.md).
 
 ## Acknowledgement
 `RLBPPred` is dependent on the following libraries, we are grateful to all the developers/maintainers:
